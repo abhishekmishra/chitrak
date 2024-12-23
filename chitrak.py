@@ -1,14 +1,16 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 import webview
 
-server = Flask(__name__, static_folder="./assets", template_folder="./templates")
+server = Flask(
+    __name__, static_folder="./www/static", template_folder="./www/templates"
+)
 
 
 @server.route("/")
 def hello_world():
-    return "Hello, World!"
+    return send_from_directory(server.static_folder, "index.html")
 
 
 if __name__ == "__main__":
-    webview.create_window("Flask example", server)
+    webview.create_window("Chitrak: Drawing Simplified", server)
     webview.start()
