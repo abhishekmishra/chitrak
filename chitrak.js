@@ -1,5 +1,11 @@
 let prevMouseX, prevMouseY;
 let drawingColor = "#000000";
+let stampTypes = {
+    circle: stampCircle,
+    square: stampSquare,
+    pencil: stampPencil,
+};
+let currentStampType = "pencil";
 
 // Attach saveDrawing to save button
 document
@@ -56,9 +62,26 @@ function mouseDragged() {
 }
 
 function brushStamp(x, y) {
-  ellipse(x, y, 10, 10);
+    stampTypes[currentStampType](x, y);
 }
 
+function stampCircle(x, y) {
+    ellipse(x, y, 10, 10);
+}
+
+function stampSquare(x, y) {
+    rect(x, y, 10, 10);
+}
+
+function stampPencil(x, y) {
+    // stamp 10 circles in and around the mouse position
+    // using perlin noise to position and size them
+    for (let i = 0; i < 10; i++) {
+        let nX = noise(x + i) * 10;
+        let nY = noise(y + i) * 10;
+        ellipse(x + nX, y + nY, 1, 1);
+    }
+}
 // reset mouse position when mouse is released
 function mouseReleased() {
   resetMousePosition();
