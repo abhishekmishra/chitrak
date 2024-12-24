@@ -1,6 +1,6 @@
 function setup() {
     // use the canvas by id "drawing_canvas"
-    createCanvas(400, 400, P2D, document.getElementById("drawing_canvas"));        
+    createCanvas(600, 600, P2D, document.getElementById("drawing_canvas"));        
     clearDrawing();
 }
 
