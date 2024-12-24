@@ -9,11 +9,32 @@
         margin: 0;
         padding: 0;
         display: flex;
+        /* arrange in columns */
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
         background-color: #f0f0f0;
       }
+
+      #drawing_toolbar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      #drawing_toolbar button {
+        margin: 5px;
+        padding: 5px 10px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
       #drawing_canvas_container {
         /* border: 1px solid #000; */
         margin: 0;
@@ -27,6 +48,10 @@
     </style>
   </head>
   <body>
+    <div id="drawing_toolbar">
+      <button id="clear_drawing_button">Clear 🧽</button>
+      <button id="save_drawing_button">Save 💾</button>
+    </div>
     <div id="drawing_canvas_container">
       <canvas id="drawing_canvas"></canvas>
     </div>

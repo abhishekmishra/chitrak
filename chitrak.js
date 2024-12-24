@@ -1,3 +1,9 @@
+// Attach saveDrawing to save button
+document.getElementById("save_drawing_button").addEventListener("click", saveDrawing);
+
+// Attach clearDrawing to clear button
+document.getElementById("clear_drawing_button").addEventListener("click", clearDrawing);
+
 function setup() {
     // use the canvas by id "drawing_canvas"
     createCanvas(600, 600, P2D, document.getElementById("drawing_canvas"));        
@@ -22,4 +28,8 @@ function keyPressed() {
 function clearDrawing() {
     clear();
     background(220);
+}
+
+function saveDrawing() {
+    saveCanvas('drawing', 'png');
 }
