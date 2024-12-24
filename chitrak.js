@@ -6,6 +6,7 @@ let stampTypes = {
     pencil: stampPencil,
 };
 let currentStampType = "pencil";
+let brushSize = 10;
 
 // Attach saveDrawing to save button
 document
@@ -21,6 +22,12 @@ document
   .getElementById("color_picker")
   .addEventListener("input", function (event) {
     drawingColor = event.target.value;
+  });
+
+document
+  .getElementById("brush_size_slider")
+  .addEventListener("input", function (event) {
+    brushSize = event.target.value;
   });
 
 // load the current color from the color picker
@@ -77,8 +84,8 @@ function stampPencil(x, y) {
     // stamp 10 circles in and around the mouse position
     // using perlin noise to position and size them
     for (let i = 0; i < 25; i++) {
-        let nX = noise(x + i) * 10;
-        let nY = noise(y + i) * 10;
+        let nX = noise(x + i) * brushSize;
+        let nY = noise(y + i) * brushSize;
         let sz = noise(x + y + i) * 2;
         ellipse(x + nX, y + nY, sz, sz);
     }
