@@ -76,10 +76,11 @@ function stampSquare(x, y) {
 function stampPencil(x, y) {
     // stamp 10 circles in and around the mouse position
     // using perlin noise to position and size them
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 25; i++) {
         let nX = noise(x + i) * 10;
         let nY = noise(y + i) * 10;
-        ellipse(x + nX, y + nY, 1, 1);
+        let sz = noise(x + y + i) * 2;
+        ellipse(x + nX, y + nY, sz, sz);
     }
 }
 // reset mouse position when mouse is released
