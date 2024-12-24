@@ -1,3 +1,6 @@
+let prevMouseX, prevMouseY;
+let drawingColor = "#000000";
+
 // Attach saveDrawing to save button
 document
   .getElementById("save_drawing_button")
@@ -8,14 +11,14 @@ document
   .getElementById("clear_drawing_button")
   .addEventListener("click", clearDrawing);
 
-let prevMouseX, prevMouseY;
-let drawingColor = "#000000";
-
 document
   .getElementById("color_picker")
   .addEventListener("input", function (event) {
     drawingColor = event.target.value;
   });
+
+// load the current color from the color picker
+drawingColor = document.getElementById("color_picker").value;
 
 function setup() {
   // use the canvas by id "drawing_canvas"
