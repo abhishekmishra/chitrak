@@ -9,6 +9,13 @@ document
   .addEventListener("click", clearDrawing);
 
 let prevMouseX, prevMouseY;
+let drawingColor = "#000000";
+
+document
+  .getElementById("color_picker")
+  .addEventListener("input", function (event) {
+    drawingColor = event.target.value;
+  });
 
 function setup() {
   // use the canvas by id "drawing_canvas"
@@ -26,7 +33,7 @@ function resetMousePosition() {
 
 function mouseDragged() {
   noStroke();
-  fill(100);
+  fill(drawingColor);
 
   if (prevMouseX !== -1) {
     let dx = mouseX - prevMouseX;

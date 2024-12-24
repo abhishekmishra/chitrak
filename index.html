@@ -35,6 +35,13 @@
         cursor: pointer;
       }
 
+      #color_picker {
+        margin: 5px;
+        padding: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
       #drawing_canvas_container {
         /* border: 1px solid #000; */
         margin: 0;
@@ -51,6 +58,7 @@
     <div id="drawing_toolbar">
       <button id="clear_drawing_button">Clear 🧽</button>
       <button id="save_drawing_button">Save 💾</button>
+      <input type="color" id="color_picker" value="#000000" />
     </div>
     <div id="drawing_canvas_container">
       <canvas id="drawing_canvas"></canvas>
