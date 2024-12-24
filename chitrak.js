@@ -44,12 +44,16 @@ function mouseDragged() {
     for (let i = 0; i < steps; i++) {
       let x = prevMouseX + (dx * i) / steps;
       let y = prevMouseY + (dy * i) / steps;
-      ellipse(x, y, 10, 10); // Adjust the ellipse size as needed
+      brushStamp(x, y);
     }
   }
 
   prevMouseX = mouseX;
   prevMouseY = mouseY;
+}
+
+function brushStamp(x, y) {
+  ellipse(x, y, 10, 10);
 }
 
 // reset mouse position when mouse is released
