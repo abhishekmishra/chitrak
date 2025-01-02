@@ -89,6 +89,7 @@ function stampSquare(x, y, pressure) {
 
 function stampPencil(x, y, pressure) {
   let adjustedBrushSize = brushSize * pressure;
+  // console.log("Brush and pressure", adjustedBrushSize, pressure);
 
   // adjust location for brush size
   x -= adjustedBrushSize / 2;
@@ -133,8 +134,10 @@ function saveDrawing() {
 }
 
 function touchStarted(event) {
+  // console.log("touchStarted", event);
   if (event.type == "touchstart") {
     const pressure = event.touches[0].force;
+    // console.log("pressure", pressure);
     brushMoved(mouseX, mouseY, pressure);
   }
   else {
@@ -145,6 +148,7 @@ function touchStarted(event) {
 function touchMoved(event) {
   if (event.type == "touchmove") {
     const pressure = event.touches[0].force;
+    // console.log("pressure", pressure);
     brushMoved(mouseX, mouseY, pressure);
   }
   else {
