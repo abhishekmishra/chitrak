@@ -47,10 +47,6 @@ function resetMousePosition() {
   prevMouseY = -1;
 }
 
-function mouseDragged(event) {
-  brushMoved(mouseX, mouseY, 1.0);
-}
-
 function brushMoved(brushX, brushY, pressure) {
   noStroke();
   fill(drawingColor);
@@ -66,6 +62,9 @@ function brushMoved(brushX, brushY, pressure) {
       let y = prevMouseY + (dy * i) / steps;
       brushStamp(x, y, pressure);
     }
+  }
+  else {
+    brushStamp(brushX, brushY, pressure);
   }
 
   prevMouseX = mouseX;
@@ -104,10 +103,19 @@ function stampPencil(x, y, pressure) {
     ellipse(x + nX, y + nY, sz, sz);
   }
 }
-// reset mouse position when mouse is released
-function mouseReleased() {
-  resetMousePosition();
-}
+
+// function mousePressed() {
+//   brushMoved(mouseX, mouseY, 1.0);
+// }
+
+// function mouseDragged(event) {
+//   brushMoved(mouseX, mouseY, 1.0);
+// }
+
+// // reset mouse position when mouse is released
+// function mouseReleased() {
+//   resetMousePosition();
+// }
 
 function keyPressed() {
   if (key === "c") {
@@ -129,6 +137,9 @@ function touchStarted(event) {
     const pressure = event.touches[0].force;
     brushMoved(mouseX, mouseY, pressure);
   }
+  else {
+    brushMoved(mouseX, mouseY, 1.0);
+  }
 }
 
 function touchMoved(event) {
@@ -136,10 +147,11 @@ function touchMoved(event) {
     const pressure = event.touches[0].force;
     brushMoved(mouseX, mouseY, pressure);
   }
+  else {
+    brushMoved(mouseX, mouseY, 1.0);
+  }
 }
 
 function touchEnded(event) {
-  if (event.type == "touchend") {
     resetMousePosition();
-  }
 }
