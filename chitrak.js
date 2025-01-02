@@ -1,9 +1,9 @@
 let prevMouseX, prevMouseY;
 let drawingColor = "#000000";
 let stampTypes = {
-    circle: stampCircle,
-    square: stampSquare,
-    pencil: stampPencil,
+  circle: stampCircle,
+  square: stampSquare,
+  pencil: stampPencil,
 };
 let currentStampType = "pencil";
 let brushSize = 10;
@@ -48,8 +48,6 @@ function resetMousePosition() {
 }
 
 function mouseDragged(event) {
-  // only if event is not from a touch device
-  console.log(event);
   brushMoved(mouseX, mouseY, 1.0);
 }
 
@@ -75,7 +73,7 @@ function brushMoved(brushX, brushY, pressure) {
 }
 
 function brushStamp(x, y, pressure) {
-    stampTypes[currentStampType](x, y, pressure);
+  stampTypes[currentStampType](x, y, pressure);
 }
 
 function stampCircle(x, y, pressure) {
@@ -91,20 +89,20 @@ function stampSquare(x, y, pressure) {
 }
 
 function stampPencil(x, y, pressure) {
-    let adjustedBrushSize = brushSize * pressure;
+  let adjustedBrushSize = brushSize * pressure;
 
-    // adjust location for brush size
-    x -= adjustedBrushSize / 2;
-    y -= adjustedBrushSize / 2;
+  // adjust location for brush size
+  x -= adjustedBrushSize / 2;
+  y -= adjustedBrushSize / 2;
 
-    // stamp 10 circles in and around the mouse position
-    // using perlin noise to position and size them
-    for (let i = 0; i < 25; i++) {
-        let nX = noise(x + i) * adjustedBrushSize;
-        let nY = noise(y + i) * adjustedBrushSize;
-        let sz = noise(x + y + i) * 2; // incorporate pressure
-        ellipse(x + nX, y + nY, sz, sz);
-    }
+  // stamp 10 circles in and around the mouse position
+  // using perlin noise to position and size them
+  for (let i = 0; i < 25; i++) {
+    let nX = noise(x + i) * adjustedBrushSize;
+    let nY = noise(y + i) * adjustedBrushSize;
+    let sz = noise(x + y + i) * 2; // incorporate pressure
+    ellipse(x + nX, y + nY, sz, sz);
+  }
 }
 // reset mouse position when mouse is released
 function mouseReleased() {
@@ -127,15 +125,21 @@ function saveDrawing() {
 }
 
 function touchStarted(event) {
-  const pressure = event.touches[0].force;
-  brushMoved(mouseX, mouseY, pressure);
+  if (event.type == "touchstart") {
+    const pressure = event.touches[0].force;
+    brushMoved(mouseX, mouseY, pressure);
+  }
 }
 
 function touchMoved(event) {
-  const pressure = event.touches[0].force;
-  brushMoved(mouseX, mouseY, pressure);
+  if (event.type == "touchmove") {
+    const pressure = event.touches[0].force;
+    brushMoved(mouseX, mouseY, pressure);
+  }
 }
 
 function touchEnded(event) {
-  resetMousePosition();
+  if (event.type == "touchend") {
+    resetMousePosition();
+  }
 }
