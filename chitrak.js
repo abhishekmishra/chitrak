@@ -47,11 +47,13 @@ function resetMousePosition() {
   prevMouseY = -1;
 }
 
-function mouseDragged() {
-  brushMoved(mouseX, mouseY);
+function mouseDragged(event) {
+  // only if event is not from a touch device
+  console.log(event);
+  brushMoved(mouseX, mouseY, 1.0);
 }
 
-function brushMoved(brushX, brushY) {
+function brushMoved(brushX, brushY, pressure) {
   noStroke();
   fill(drawingColor);
 
@@ -64,7 +66,7 @@ function brushMoved(brushX, brushY) {
     for (let i = 0; i < steps; i++) {
       let x = prevMouseX + (dx * i) / steps;
       let y = prevMouseY + (dy * i) / steps;
-      brushStamp(x, y);
+      brushStamp(x, y, pressure);
     }
   }
 
@@ -72,29 +74,35 @@ function brushMoved(brushX, brushY) {
   prevMouseY = mouseY;
 }
 
-function brushStamp(x, y) {
-    stampTypes[currentStampType](x, y);
+function brushStamp(x, y, pressure) {
+    stampTypes[currentStampType](x, y, pressure);
 }
 
-function stampCircle(x, y) {
-    ellipse(x, y, 10, 10);
+function stampCircle(x, y, pressure) {
+  let adjustedBrushSize = brushSize * pressure;
+
+  ellipse(x, y, adjustedBrushSize, adjustedBrushSize);
 }
 
-function stampSquare(x, y) {
-    rect(x, y, 10, 10);
+function stampSquare(x, y, pressure) {
+  let adjustedBrushSize = brushSize * pressure;
+
+  rect(x, y, 10, 10);
 }
 
-function stampPencil(x, y) {
+function stampPencil(x, y, pressure) {
+    let adjustedBrushSize = brushSize * pressure;
+
     // adjust location for brush size
-    x -= brushSize / 2;
-    y -= brushSize / 2;
-    
+    x -= adjustedBrushSize / 2;
+    y -= adjustedBrushSize / 2;
+
     // stamp 10 circles in and around the mouse position
     // using perlin noise to position and size them
     for (let i = 0; i < 25; i++) {
-        let nX = noise(x + i) * brushSize;
-        let nY = noise(y + i) * brushSize;
-        let sz = noise(x + y + i) * 2;
+        let nX = noise(x + i) * adjustedBrushSize;
+        let nY = noise(y + i) * adjustedBrushSize;
+        let sz = noise(x + y + i) * 2; // incorporate pressure
         ellipse(x + nX, y + nY, sz, sz);
     }
 }
@@ -122,7 +130,8 @@ function touchStarted(event) {
 }
 
 function touchMoved(event) {
-  brushMoved(mouseX, mouseY);
+  const pressure = event.touches[0].force;
+  brushMoved(mouseX, mouseY, pressure);
 }
 
 function touchEnded(event) {
