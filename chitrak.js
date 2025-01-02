@@ -85,6 +85,10 @@ function stampSquare(x, y) {
 }
 
 function stampPencil(x, y) {
+    // adjust location for brush size
+    x -= brushSize / 2;
+    y -= brushSize / 2;
+    
     // stamp 10 circles in and around the mouse position
     // using perlin noise to position and size them
     for (let i = 0; i < 25; i++) {
