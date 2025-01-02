@@ -127,6 +127,8 @@ function saveDrawing() {
 }
 
 function touchStarted(event) {
+  const pressure = event.touches[0].force;
+  brushMoved(mouseX, mouseY, pressure);
 }
 
 function touchMoved(event) {
