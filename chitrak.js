@@ -48,13 +48,17 @@ function resetMousePosition() {
 }
 
 function mouseDragged() {
+  brushMoved(mouseX, mouseY);
+}
+
+function brushMoved(brushX, brushY) {
   noStroke();
   fill(drawingColor);
 
   if (prevMouseX !== -1) {
-    let dx = mouseX - prevMouseX;
-    let dy = mouseY - prevMouseY;
-    let distance = dist(prevMouseX, prevMouseY, mouseX, mouseY);
+    let dx = brushX - prevMouseX;
+    let dy = brushY - prevMouseY;
+    let distance = dist(prevMouseX, prevMouseY, brushX, brushY);
     let steps = distance / 5; // Adjust the step size as needed
 
     for (let i = 0; i < steps; i++) {
@@ -108,4 +112,15 @@ function clearDrawing() {
 
 function saveDrawing() {
   saveCanvas("drawing", "png");
+}
+
+function touchStarted(event) {
+}
+
+function touchMoved(event) {
+  brushMoved(mouseX, mouseY);
+}
+
+function touchEnded(event) {
+  resetMousePosition();
 }
